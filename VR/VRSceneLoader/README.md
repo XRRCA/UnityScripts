@@ -1,5 +1,7 @@
 # Overview
 Package which allows you to fade in and out between scenes when creating games for VR headsets or other devices with [Stereoscopic Rendering](https://docs.unity.cn/550/Documentation/Manual/SinglePassStereoRendering.html).
+# Get Files
+[Download Unity Package Here](https://github.com/XRRCA/UnityScripts/raw/main/VR/VRSceneLoader/VRSceneLoader.unitypackage)
 # Instructions
 
 1. Download and Import the .UnityPackage
@@ -23,7 +25,3 @@ Package which allows you to fade in and out between scenes when creating games f
       // Invoke the method through the event
       myEvent.Invoke();
       ```
-
-
-# Get Files
-[Download Unity Package Here](https://github.com/XRRCA/UnityScripts/raw/main/VR/VRSceneLoader/VRSceneLoader.unitypackage)
