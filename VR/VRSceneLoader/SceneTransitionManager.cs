@@ -23,7 +23,7 @@ public class SceneTransitionManager : MonoBehaviour
     private GameObject m_GameObject;
     private bool fadingIn;
 
-    private void start()
+    private void Start()
     {
         if (fadeOnStart) { FadeIn(); }
     }
