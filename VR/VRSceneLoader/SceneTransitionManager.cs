@@ -20,8 +20,9 @@ public class SceneTransitionManager : MonoBehaviour
     public float fadeDuration = 2;
     public Color fadeColor;
     public GameObject FadeSphereGameObject;
-    private GameObject m_GameObject;
-    private bool fadingIn;
+    private GameObject _GameObject;
+    private bool _FadingIn;
+    private bool _CoroutineRunning;
 
     private void Start()
     {
@@ -37,13 +38,13 @@ public class SceneTransitionManager : MonoBehaviour
 
     public void FadeIn()
     {
-        fadingIn = true;
+        _FadingIn = true;
         Fade(1, 0);
     }
 
     public void FadeOut()
     {
-        fadingIn = false;
+        _FadingIn = false;
         Fade(0, 1);
     }
 
@@ -53,6 +54,7 @@ public class SceneTransitionManager : MonoBehaviour
 
     private void Fade(float alphaIn, float alphaOut)
     {
+        if(_CoroutineRunning){ StopAllCoroutines();}
         StartCoroutine(FadeRoutine(alphaIn, alphaOut));
     }
 
@@ -73,16 +75,18 @@ public class SceneTransitionManager : MonoBehaviour
 
         operation.allowSceneActivation = true;
         yield return operation.isDone;
-        Destroy(m_GameObject);
+        Destroy(_GameObject);
     }
 
     // Main Fade Function
     private IEnumerator FadeRoutine(float alphaIn, float alphaOut)
     {
+        _CoroutineRunning = true;
+        if (_FadingIn) { Destroy(_GameObject); }
         float timer = 0;
         // FadeSphere = CreateFadeSphereObject();
-        m_GameObject = Instantiate(FadeSphereGameObject, Camera.main.transform);
-        Material material = m_GameObject.GetComponent<Renderer>().material;
+        _GameObject = Instantiate(FadeSphereGameObject, Camera.main.transform);
+        Material material = _GameObject.GetComponent<Renderer>().material;
         while (timer <= fadeDuration)
         {
             fadeColor.a = Mathf.Lerp(alphaIn, alphaOut, timer / fadeDuration);
@@ -90,7 +94,9 @@ public class SceneTransitionManager : MonoBehaviour
             material.color = fadeColor;
             yield return null;
         }
-        if (fadingIn) { Destroy(m_GameObject); }
+        if (_FadingIn) { Destroy(_GameObject); }
+
+        _CoroutineRunning = false;
     }
 
 
